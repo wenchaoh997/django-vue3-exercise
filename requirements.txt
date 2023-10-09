@@ -1,0 +1,6 @@
+django
+django-rest-framework
+django-cors-headers
+unidecode
+shortuuid
+drf-yasg
