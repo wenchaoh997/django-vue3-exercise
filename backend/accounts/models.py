@@ -2,10 +2,8 @@ from django.db import models, reset_queries
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 # Create your models here.
-
-
 class UserManager(BaseUserManager):
-    def create_user(self, email, password, isStaff=False, isAdmin=False):
+    def create_user(self, email, password, isStaff=False, isAdmin=False, isActive=True):
         if not email:
             raise ValueError("Users must have an email")
 
@@ -17,6 +15,7 @@ class UserManager(BaseUserManager):
         userObj.set_password(password)
         userObj.staff = isStaff
         userObj.admin = isAdmin
+        userObj.active = isActive
         userObj.save(using=self._db)
 
         return userObj
@@ -31,12 +30,12 @@ class UserManager(BaseUserManager):
 
         return user
 
-
 class User(AbstractBaseUser):
+    name = models.CharField(max_length=15, unique=True, null=True)
     email = models.EmailField(max_length=255, unique=True)
     admin = models.BooleanField(default=False)
     staff = models.BooleanField(default=False)
-    active = models.BooleanField(default=True)
+    active = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     USERNAME_FIELD = "email"
@@ -70,31 +69,3 @@ class User(AbstractBaseUser):
     @property
     def is_active(self):
         return self.active
-
-
-class Profile(models.Model):
-    GENDERS = (
-        ("male", "male"),
-        ("female", "female"),
-        ("unknown", "unknown"),
-    )
-
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-    fullName = models.CharField(max_length=255, blank=True, null=True)
-    gender = models.CharField(max_length=50, choices=GENDERS, blank=True, null=True)
-    dateOfBirth = models.DateField(null=True, blank=True)
-    phone = models.CharField(max_length=20, blank=True, null=True)
-    address = models.CharField(max_length=255, blank=True, null=True)
-    driverLicense = models.CharField(max_length=12, null=True)
-    districtId = models.IntegerField(null=True, blank=True)
-    wardId = models.IntegerField(null=True, blank=True)
-    dateCreated = models.DateTimeField(auto_now_add=True)
-    consignee = models.BooleanField(default=False)
-
-    def __str__(self):
-
-        return (
-            f"Profile from user {self.user}"
-            if not self.consignee
-            else f"Profile from consignee with Order id {self.order.id}"
-        )

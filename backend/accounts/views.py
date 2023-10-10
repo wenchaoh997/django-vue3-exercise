@@ -8,8 +8,8 @@ from rest_framework.authtoken.models import Token
 import unidecode
 import shortuuid
 
-from .models import User, Profile
-from .serializers import UserSerializer, ProfileSerializer
+from .models import User
+from .serializers import UserSerializer
 from .permissions import AdminOnly
 
 # Create your views here.
@@ -49,96 +49,6 @@ def registerApi(request):
         )
 
     return JsonResponse(status=status.HTTP_200_OK, data={"message": "User is created"})
-
-
-@api_view(["GET", "POST"])
-@permission_classes([IsAuthenticated])
-def verifyAccount(request):
-    """
-    Verify token
-    If token is valid, return a profile info of that user user
-    Change user info if receive a valid POST data
-    """
-    profile = Profile.objects.get(user=request.user)
-
-    # Update profile
-    if request.method == "POST":
-        serializer = ProfileSerializer(profile, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-        else:
-            print(f"[SERVER]: Error updating profile {serializer.errors}")
-
-        return JsonResponse(
-            status=status.HTTP_200_OK, data={"message": "Profile updated!"}
-        )
-
-    # Get profile
-    else:
-        serializer = ProfileSerializer(
-            profile, many=False, context={"request": request}
-        )
-        return Response(serializer.data)
-
-
-@api_view(["GET"])
-@permission_classes([IsAuthenticated, AdminOnly])
-def profileList(request):
-    """Get profile base on role"""
-    query = request.GET.get("q") or "employee"
-
-    queries = {
-        "employee": Profile.objects.filter(user__staff=True),
-        "consignor": Profile.objects.filter(user__staff=False).order_by("-dateCreated"),
-        "consignee": Profile.objects.filter(consignee=True).order_by("-dateCreated"),
-    }
-
-    profiles = queries.get(query.lower())
-
-    serializers = ProfileSerializer(profiles, many=True)
-    return Response(status=status.HTTP_200_OK, data=serializers.data)
-
-
-@api_view(["GET"])
-@permission_classes([IsAuthenticated, AdminOnly])
-def profile(request, email):
-    """Return profile information correspond to email parameter"""
-    query = Profile.objects.filter(user__email=email)
-
-    if not query.exists():
-        return Response(
-            status=status.HTTP_404_NOT_FOUND, data={"error": "Profile did not exists"}
-        )
-
-    serializer = ProfileSerializer(query[0], many=False)
-    return Response(status=status.HTTP_200_OK, data=serializer.data)
-
-
-@api_view(["POST"])
-@permission_classes([IsAuthenticated, AdminOnly])
-def createDriver(request):
-    """Create an account for driver"""
-    fullName = request.data.get("fullName")
-    license = request.data.get("license")
-
-    newEmail = emailGenerator(fullName)
-    newPassword = "kaz123"
-
-    try:
-        newDriver = User.objects.create_staffuser(newEmail, newPassword)
-
-        driverProfile = Profile.objects.get(user=newDriver)
-        driverProfile.fullName = fullName
-        driverProfile.driverLicense = license
-        driverProfile.save()
-
-    except Exception as e:
-        print("Error new driver", e)
-        return Response(
-            status=status.HTTP_500_INTERNAL_SERVER_ERROR, data={"error": "error"}
-        )
-
-    return Response(status=status.HTTP_200_OK)
 
 
 # Utils Functions
