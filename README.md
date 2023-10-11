@@ -8,7 +8,9 @@ $ cd backend
 $ pip install -r ../requirements.txt
 $ python manage.py runserver
 ```
-
+Models:
+- `accounts`
+- `catalog`
 
 ## Frontend - Vue.js
 ```bash
