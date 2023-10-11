@@ -25,3 +25,4 @@ $ npm run dev
 ## References
 - [Shipping-System-Management](https://github.com/NgoQuocBao1010/Shipping-System-Management/)
 - [element-plus-vite-starter](https://github.com/element-plus/element-plus-vite-starter)
+- [Tutorial_local_library_website](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Tutorial_local_library_website)
