@@ -9,10 +9,9 @@ from .models import Book
 # Create your views here.
 @api_view(["GET"])
 def books(request):
-    books = Book.objects.all()
-    serializer = BookSerializer(books, many=True)
+    books = Book.objects.values("title")
     return Response(
-        data=serializer.data,
+        data=books,
         status=status.HTTP_200_OK
     )
 

@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import login from "~/api/backend/Account"
+
 export default {
   data() {
     return {

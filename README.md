@@ -25,6 +25,8 @@ $ npm run dev
 - [ ] Register page
 
 ## References
+- [django-rest-framework](https://www.django-rest-framework.org/)
 - [Shipping-System-Management](https://github.com/NgoQuocBao1010/Shipping-System-Management/)
 - [element-plus-vite-starter](https://github.com/element-plus/element-plus-vite-starter)
 - [Tutorial_local_library_website](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Tutorial_local_library_website)
+- [how-to-build-vue-js-app-django-rest-framework](https://blog.logrocket.com/how-to-build-vue-js-app-django-rest-framework/)
