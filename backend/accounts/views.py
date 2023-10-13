@@ -35,13 +35,15 @@ def loginApi(request):
         is_valid = user.check_password(password)
         if is_valid:
             # token = Token.objects.get_or_create(user=user)
-            return Response(
+            response = JsonResponse(
                 status=status.HTTP_200_OK,
                 data={
                     # "auth_token": token.key,
                     "email": email,
                 }
             )
+            response.set_cookie("is_login", True, max_age=300000)
+            return response
     except User.DoesNotExist:
         pass
     return JsonResponse(
