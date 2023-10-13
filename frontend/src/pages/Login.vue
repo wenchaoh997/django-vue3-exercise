@@ -10,9 +10,9 @@
           <el-input placeholder="Please input password" v-model="form.Password" show-password></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button @click="LoginHandle('form')">Login</el-button>
-          <el-button type="primary" @click="SignupHandle">Signup</el-button>
-          <el-button type="warning" @click="ResetHandle">Reset</el-button>
+          <el-button @click="loginHandle('form')">Login</el-button>
+          <el-button type="primary" @click="registerHandle">Signup</el-button>
+          <el-button type="warning" @click="resetHandle">Reset</el-button>
         </el-form-item>
       </el-form>
     </el-row>
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import login from "~/api/backend/Account"
+import api from "~/api/backend/Account"
 
 export default {
   data() {
@@ -41,21 +41,24 @@ export default {
     }
   },
   methods: {
-    LoginHandle(FormName) {
+    loginHandle(FormName) {
       this.$refs[FormName].validate((valid) => {
-        if (valid){
+        if (valid){          
+          const response = api.login(this.form)
+          response.then(value => {
+            console.log(value);
+          })
           this.$router.push("/main")
-          console.log(this.form.UserName, this.form.Password);
         }
         else{
           this.dialogDisabled = false
         }
       })
     },
-    SignupHandle(){
-      this.$router.push("/main")
+    registerHandle(){
+      this.$router.push("/register")
     },
-    ResetHandle(){
+    resetHandle(){
       this.form.UserName = ""
       this.form.Password = ""
     }

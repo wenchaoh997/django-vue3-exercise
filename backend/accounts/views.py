@@ -27,21 +27,19 @@ from .permissions import AdminOnly
 @api_view(["POST"])
 def loginApi(request):
     """Token login"""
-    email = request.data.get("email", None)
-    password = request.data.get("password", None)
+    email = request.data.get("UserName", None)
+    password = request.data.get("Password", None)
     try:
         user = User.objects.get(email=email)
         is_valid = user.check_password(password)
         if is_valid:
             token = user.token
-            print(user.token)
             response = JsonResponse(
                 status=status.HTTP_200_OK,
                 data={
                     "token": token,
                 }
             )
-            response.set_cookie("is_login", True, max_age=300000)
             return response
     except User.DoesNotExist:
         pass

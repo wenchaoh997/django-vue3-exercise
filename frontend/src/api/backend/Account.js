@@ -1,10 +1,7 @@
 import axios from "./index"
-import Account from "./index"
 
-// 
-export const login = (params) => {
-    return axios.post(
-        url="/accounts/login",
-        data=params,
-    )
-};
+export default {
+    login(params){
+        return axios.post("/accounts/login", params);
+    }
+}
