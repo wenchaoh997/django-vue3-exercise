@@ -43,12 +43,17 @@ export default {
   methods: {
     loginHandle(FormName) {
       this.$refs[FormName].validate((valid) => {
-        if (valid){          
-          const response = api.login(this.form)
-          response.then(value => {
-            console.log(value);
-          })
-          this.$router.push("/main")
+        if (valid){     
+          try {
+            const response = api.login(this.form)
+            response.then(value => {
+              console.log(value);
+              this.$router.push("/main");
+            })
+          } catch (error) {
+            const response = error
+            console.log(response);
+          }     
         }
         else{
           this.dialogDisabled = false

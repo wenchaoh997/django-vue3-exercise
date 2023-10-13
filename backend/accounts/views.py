@@ -19,8 +19,8 @@ from .permissions import AdminOnly
     request_body=openapi.Schema(
         type=openapi.TYPE_OBJECT, 
         properties={
-            'email': openapi.Schema(type=openapi.TYPE_STRING, description='Email as username', example="example@gmail.com"),
-            'password': openapi.Schema(type=openapi.TYPE_STRING, description='Password', example="1234"),
+            'UserName': openapi.Schema(type=openapi.TYPE_STRING, description='Email as username', example="example@gmail.com"),
+            'Password': openapi.Schema(type=openapi.TYPE_STRING, description='Password', example="1234"),
         }
     )
 )
