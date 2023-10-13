@@ -1,5 +1,8 @@
 from django.db import models, reset_queries
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+import jwt
+import datetime
+import backend.settings as settings
 
 # Create your models here.
 class UserManager(BaseUserManager):
@@ -45,7 +48,7 @@ class User(AbstractBaseUser):
 
     def __str__(self):
         return self.email
-
+    
     @staticmethod
     def has_perm(perm, obj=None):
         # "Does the user have a specific permission?"
@@ -58,6 +61,20 @@ class User(AbstractBaseUser):
         # Simplest possible answer: Yes, always
         return True
 
+    @property
+    def token(self):
+        return self._generate_jwt_token()
+
+    def _generate_jwt_token(self):
+        token = jwt.encode({
+            "exp": datetime.datetime.now() + datetime.timedelta(days=1),
+            "iat": datetime.datetime.now(),
+            "data":{
+                "name": self.email
+            }
+        }, settings.SECRET_KEY, algorithm="HS256")
+        return token.encode("utf-8").decode("utf-8")
+    
     @property
     def is_admin(self):
         return self.admin

@@ -4,7 +4,6 @@ from rest_framework import exceptions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-# from rest_framework.authtoken.models import Token
 
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -34,12 +33,12 @@ def loginApi(request):
         user = User.objects.get(email=email)
         is_valid = user.check_password(password)
         if is_valid:
-            # token = Token.objects.get_or_create(user=user)
+            token = user.token
+            print(user.token)
             response = JsonResponse(
                 status=status.HTTP_200_OK,
                 data={
-                    # "auth_token": token.key,
-                    "email": email,
+                    "token": token,
                 }
             )
             response.set_cookie("is_login", True, max_age=300000)
