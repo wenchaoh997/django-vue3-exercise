@@ -21,12 +21,13 @@ $ npm run dev
 
 
 ## TODO
-- [ ] Login page
+- [X] Login page
 - [ ] Register page
 
 ## References
 - [django-rest-framework](https://www.django-rest-framework.org/)
 - [pyjwt](https://pyjwt.readthedocs.io/en/stable/)
+- [vue-cookies](https://www.npmjs.com/package/vue-cookies)
 - [Shipping-System-Management](https://github.com/NgoQuocBao1010/Shipping-System-Management/)
 - [element-plus-vite-starter](https://github.com/element-plus/element-plus-vite-starter)
 - [Tutorial_local_library_website](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Tutorial_local_library_website)

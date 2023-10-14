@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { ElNotification } from 'element-plus'
 import api from "~/api/backend/Account"
 
 export default {
@@ -29,12 +30,12 @@ export default {
         UserName: "",
         Password: "",
       },
-      rules:{
-        UserName:[
-          {required: true, message: "Username can not be empty.", trigger: "blur"}
+      rules: {
+        UserName: [
+          { required: true, message: "Username can not be empty.", trigger: "blur" }
         ],
-        Password:[
-          {required: true, message: "Password can not be empty.", trigger: "blur"}
+        Password: [
+          { required: true, message: "Password can not be empty.", trigger: "blur" }
         ]
       },
       dialogDisabled: true
@@ -43,28 +44,29 @@ export default {
   methods: {
     loginHandle(FormName) {
       this.$refs[FormName].validate((valid) => {
-        if (valid){     
-          try {
-            const response = api.login(this.form)
-            response.then(value => {
-              console.log(value);
-              this.$cookies.set("jwt", value.data.token);
-              this.$router.push("/main");
+        if (valid) {
+          const response = api.login(this.form);
+          response.then((value) => {
+            this.$cookies.set("jwt", value.data.token);
+            this.$router.push("/main");
+            ElNotification({
+                title: 'Success',
+                type: 'success'
+              });
+          }).catch((error) => {
+              ElNotification({
+                title: 'Error',
+                message: error.response.data.message,
+                type: 'error'
+              });
             })
-          } catch (error) {
-            const response = error
-            console.log(response);
-          }     
-        }
-        else{
-          this.dialogDisabled = false
         }
       })
     },
-    registerHandle(){
+    registerHandle() {
       this.$router.push("/register")
     },
-    resetHandle(){
+    resetHandle() {
       this.form.UserName = ""
       this.form.Password = ""
     }

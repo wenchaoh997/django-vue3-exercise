@@ -15,8 +15,9 @@ import "element-plus/dist/index.css";
 import "~/styles/index.scss";
 import "uno.css";
 
-// If you want to use ElMessage, import it.
+// Import .scss before using feedback components
 import "element-plus/theme-chalk/src/message.scss";
+import "element-plus/theme-chalk/src/notification.scss";
 
 const app = createApp(App);
 app.use(ElementPlus);
