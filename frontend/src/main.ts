@@ -2,6 +2,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router/index"
 import api from "./api/backend/index"
+import VueCookies from 'vue-cookies'
 
 // import "~/styles/element/index.scss";
 
@@ -19,6 +20,7 @@ import "element-plus/theme-chalk/src/message.scss";
 
 const app = createApp(App);
 app.use(ElementPlus);
-app.use(router)
-app.provide('$http', api)
+app.use(router);
+app.use(VueCookies, { expires: "1d" });
+app.provide('$http', api);
 app.mount("#app");

@@ -48,6 +48,7 @@ export default {
             const response = api.login(this.form)
             response.then(value => {
               console.log(value);
+              this.$cookies.set("jwt", value.data.token);
               this.$router.push("/main");
             })
           } catch (error) {
