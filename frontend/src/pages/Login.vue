@@ -38,7 +38,6 @@ export default {
           { required: true, message: "Password can not be empty.", trigger: "blur" }
         ]
       },
-      dialogDisabled: true
     }
   },
   methods: {
