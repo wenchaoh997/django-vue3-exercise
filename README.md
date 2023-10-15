@@ -19,11 +19,6 @@ $ npm install
 $ npm run dev
 ```
 
-
-## TODO
-- [X] Login page
-- [ ] Register page
-
 ## References
 - [django-rest-framework](https://www.django-rest-framework.org/)
 - [pyjwt](https://pyjwt.readthedocs.io/en/stable/)

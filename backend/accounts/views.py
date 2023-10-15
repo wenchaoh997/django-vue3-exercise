@@ -38,6 +38,7 @@ def loginApi(request):
                 status=status.HTTP_200_OK,
                 data={
                     "token": token,
+                    "message": "Login successed"
                 }
             )
             return response

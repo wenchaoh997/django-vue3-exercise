@@ -47,9 +47,10 @@ export default {
           const response = api.login(this.form);
           response.then((value) => {
             this.$cookies.set("jwt", value.data.token);
-            this.$router.push("/main");
+            this.$router.push("/dashboard");
             ElNotification({
                 title: 'Success',
+                message: value.data.message,
                 type: 'success'
               });
           }).catch((error) => {

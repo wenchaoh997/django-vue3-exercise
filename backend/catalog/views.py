@@ -10,9 +10,9 @@ from .models import Book
 @api_view(["GET"])
 def books(request):
     books = Book.objects.values("title")
-    return Response(
-        data=books,
-        status=status.HTTP_200_OK
+    return JsonResponse(
+        data={"data": list(books)},
+        status=status.HTTP_200_OK,
     )
 
 @api_view(["GET", "DELETE"])

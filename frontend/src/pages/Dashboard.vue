@@ -1,4 +1,4 @@
 <template>
-<h3>Main</h3>
+<h3>dashboard</h3>
 </template>
 
