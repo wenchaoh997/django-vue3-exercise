@@ -86,3 +86,6 @@ class User(AbstractBaseUser):
     @property
     def is_active(self):
         return self.active
+
+def decode_jwt(ss):
+    return jwt.decode(ss, settings.SECRET_KEY, algorithms="HS256")

@@ -21,4 +21,5 @@ urlpatterns = [
     # account authorization
     path("login", views.loginApi, name="login"),
     path("register", views.registerApi, name="register"),
+    path("login_verification", views.login_verification, name="verification"),
 ]

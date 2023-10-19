@@ -7,6 +7,7 @@ from rest_framework.response import Response
 
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from .models import decode_jwt
 
 from .models import User
 from .serializers import UserSerializer
@@ -79,3 +80,31 @@ def registerApi(request):
 
     return JsonResponse(status=status.HTTP_200_OK, data={"message": "User is created"})
 
+
+@api_view(["POST"])
+def login_verification(request):
+    jwt_val = request.data.get("jwt", None)
+    if not jwt_val: 
+        return JsonResponse(
+            status=status.HTTP_200_OK,
+            data={"message": "None"},
+        )
+    djwt = decode_jwt(jwt_val)
+    data = djwt.get("data", None)
+    if not data:
+        return JsonResponse(
+            status=status.HTTP_200_OK,
+            data={"message": "None"},
+        )
+    email = data.get("name", None)
+
+    user = User.objects.filter(email=email)
+    if user:
+        return JsonResponse(
+            status=status.HTTP_200_OK,
+            data={"message": "OK"},
+        )
+    return JsonResponse(
+        status=status.HTTP_200_OK,
+        data={"message": "None"},
+    )
