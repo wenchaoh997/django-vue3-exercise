@@ -6,5 +6,8 @@ export default {
     }, 
     register(params){
         return axios.post("/accounts/register", params);
-    }
+    },
+    verification(params){
+        return axios.post("/accounts/login_verification", params)
+    },
 }

@@ -40,6 +40,14 @@ export default {
       },
     }
   },
+  created() {
+    const response = api.verification({"jwt": this.$cookies.get("jwt")});
+    response.then((value) => {
+      if (value.data.message === "OK") {
+        this.$router.push("/dashboard")
+      }
+    })
+  },
   methods: {
     loginHandle(FormName) {
       this.$refs[FormName].validate((valid) => {
@@ -49,17 +57,17 @@ export default {
             this.$cookies.set("jwt", value.data.token);
             this.$router.push("/dashboard");
             ElNotification({
-                title: 'Success',
-                message: value.data.message,
-                type: 'success'
-              });
+              title: 'Success',
+              message: value.data.message,
+              type: 'success'
+            });
           }).catch((error) => {
-              ElNotification({
-                title: 'Error',
-                message: error.response.data.message,
-                type: 'error'
-              });
-            })
+            ElNotification({
+              title: 'Error',
+              message: error.response.data.message,
+              type: 'error'
+            });
+          })
         }
       })
     },
