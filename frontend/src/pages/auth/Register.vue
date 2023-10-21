@@ -39,6 +39,14 @@ export default {
       },
     }
   },
+  created() {
+    const response = api.verification({"jwt": this.$cookies.get("jwt")});
+    response.then((value) => {
+      if (value.data.message === "OK") {
+        this.$router.push("/dashboard")
+      }
+    })
+  },
   methods: {
     registerHandle(FormName) {
       this.$refs[FormName].validate((valid) => {

@@ -6,6 +6,9 @@ export default{
     return {
       isLogin: false,
     }
+  },
+  methods:{
+    toggleDark,
   }
 }
 </script>
