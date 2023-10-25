@@ -8,7 +8,7 @@
     :router="true"
   >
     <el-menu-item index="/booklist">
-      <el-icon><location /></el-icon>
+      <el-icon><Document /></el-icon>
       <template #title>Book List</template>
     </el-menu-item>
     <el-menu-item index="2">
