@@ -7,6 +7,7 @@ const routes = [
     { path: "/dashboard", component: ()=>import("~/pages/Dashboard.vue") },
     { path: "/feedback", component: ()=>import("~/pages/Feedback.vue") },
     { path: "/booklist", component: ()=>import("~/pages/BookList.vue") },
+    { path: "/newBook", component: ()=>import("~/pages/NewBook.vue") },
 ]
 
 const router = createRouter({

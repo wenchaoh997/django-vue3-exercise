@@ -4,11 +4,14 @@ import { toggleDark } from "~/composables";
 export default{
   data(){
     return {
-      isLogin: false,
+      isLogin: true,
     }
   },
   methods:{
     toggleDark,
+    logoutHandle(){
+      this.$cookies.remove("jwt");
+    },
   }
 }
 </script>
@@ -42,7 +45,7 @@ export default{
         <i inline-flex i="dark:ep-moon ep-sunny" />
       </button>
     </el-menu-item>
-    <el-menu-item v-if="isLogin">
+    <el-menu-item index="/" @click="logoutHandle" v-if="isLogin">
       logout
     </el-menu-item>
     
