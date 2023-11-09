@@ -1,5 +1,6 @@
 from django.db import models
 import uuid
+from catalog.models import Genre, Book, Author
 
 # Create your models here.
 class AuditFlow(models.Model):
@@ -10,7 +11,7 @@ class AuditFlow(models.Model):
         ("b", "book"),
     )
     auditType = models.CharField(
-        max_length=2,
+        max_length=1,
         choices=AUDITTYPES,
         blank=False,
         default="b",
@@ -37,4 +38,11 @@ class AuditFlowDetail(models.Model):
     auditor = models.ForeignKey("accounts.User", on_delete=models.CASCADE, null=False)
     remark = models.CharField(max_length=500)
     auditTime = models.DateTimeField(auto_now_add=True)
+
+    STATUS = (
+        ("a", "approve"),
+        ("r", "reject"),
+        ("m", "modify"),
+    )
+    status = models.CharField(max_length=1, choices=STATUS, blank=False, default="a")
     step = models.IntegerField()
